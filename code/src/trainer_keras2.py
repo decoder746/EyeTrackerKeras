@@ -54,9 +54,9 @@ else:
 
 
 # Saving Checkpoints
-trained_model_file_path = os.path.join(keras_models_folder_path, 'Model-{epoch:03d}-{loss:.3f}.hdf5')
+trained_model_file_path = os.path.join(keras_models_folder_path, 'Model-{epoch:03d}-{val-loss:.3f}.hdf5')
 checkpoint = ModelCheckpoint(trained_model_file_path,
-                             monitor='loss',
+                             monitor='val-loss',
                              verbose=0,
                              save_best_only=False,
                              mode='auto',
@@ -68,6 +68,6 @@ callbacks_list = [checkpoint]
 print('Commencing Training')
 model.fit_generator(generator=training_generator,
                     epochs=NUM_EPOCHS,
-                    # validation_data=validation_generator,
+                    validation_data=validation_generator,
                     callbacks=callbacks_list)
 print('Training Completed!')

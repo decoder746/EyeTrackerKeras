@@ -52,47 +52,46 @@ with open(train_file_path, 'w', newline='') as trw, open(test_file_path, 'w', ne
     validation_writer = csv.writer(vaw, quoting=csv.QUOTE_NONNUMERIC)
 
     for i in range(total_number_instances):
-        if(int(metadata_mat['labelRecNum'][i][0]) in list([6,104,114])):
-            record = []
+        record = []
 
-            record.append(str(int(metadata_mat['labelRecNum'][i][0])).zfill(5))
-            record.append(str(int(metadata_mat['frameIndex'][i][0])).zfill(5))
-            print(str(int(metadata_mat['frameIndex'][i][0])))
-            record.append(metadata_mat['labelFaceGrid'][i][0])
-            record.append(metadata_mat['labelFaceGrid'][i][1])
-            record.append(metadata_mat['labelFaceGrid'][i][2])
-            record.append(metadata_mat['labelFaceGrid'][i][3])
-            record.append(round(metadata_mat['labelDotXCam'][i][0], 5))
-            record.append(round(metadata_mat['labelDotYCam'][i][0], 5))
+        record.append(str(int(metadata_mat['labelRecNum'][i][0])).zfill(5))
+        record.append(str(int(metadata_mat['frameIndex'][i][0])).zfill(5))
+        print(str(int(metadata_mat['frameIndex'][i][0])))
+        record.append(metadata_mat['labelFaceGrid'][i][0])
+        record.append(metadata_mat['labelFaceGrid'][i][1])
+        record.append(metadata_mat['labelFaceGrid'][i][2])
+        record.append(metadata_mat['labelFaceGrid'][i][3])
+        record.append(round(metadata_mat['labelDotXCam'][i][0], 5))
+        record.append(round(metadata_mat['labelDotYCam'][i][0], 5))
 
-            image_file_path = os.path.join(pp.gaze_capture_dataset_folder_path, record[0], 'appleFace', record[1]+'.jpg')
-            print(image_file_path)
-            image = cv2.imread(image_file_path, cv2.IMREAD_COLOR)
-            image = cv2.resize(image, (224, 224))
-            cv2.imwrite(image_file_path, image)
+        image_file_path = os.path.join(pp.gaze_capture_dataset_folder_path, record[0], 'appleFace', record[1]+'.jpg')
+        print(image_file_path)
+        image = cv2.imread(image_file_path, cv2.IMREAD_COLOR)
+        image = cv2.resize(image, (224, 224))
+        cv2.imwrite(image_file_path, image)
 
-            image_file_path = os.path.join(pp.gaze_capture_dataset_folder_path, record[0], 'appleLeftEye', record[1] + '.jpg')
-            image = cv2.imread(image_file_path, cv2.IMREAD_COLOR)
-            image = cv2.resize(image, (224, 224))
-            cv2.imwrite(image_file_path, image)
+        image_file_path = os.path.join(pp.gaze_capture_dataset_folder_path, record[0], 'appleLeftEye', record[1] + '.jpg')
+        image = cv2.imread(image_file_path, cv2.IMREAD_COLOR)
+        image = cv2.resize(image, (224, 224))
+        cv2.imwrite(image_file_path, image)
 
-            image_file_path = os.path.join(pp.gaze_capture_dataset_folder_path, record[0], 'appleRightEye', record[1] + '.jpg')
-            image = cv2.imread(image_file_path, cv2.IMREAD_COLOR)
-            image = cv2.resize(image, (224, 224))
-            cv2.imwrite(image_file_path, image)
+        image_file_path = os.path.join(pp.gaze_capture_dataset_folder_path, record[0], 'appleRightEye', record[1] + '.jpg')
+        image = cv2.imread(image_file_path, cv2.IMREAD_COLOR)
+        image = cv2.resize(image, (224, 224))
+        cv2.imwrite(image_file_path, image)
 
-            if metadata_mat['labelTrain'][i][0] == 1:
-                train_writer.writerow(record)
-                total_train_instances += 1
-            elif metadata_mat['labelTest'][i][0] == 1:
-                test_writer.writerow(record)
-                total_test_instances += 1
-            elif metadata_mat['labelVal'][i][0] == 1:
-                validation_writer.writerow(record)
-                total_validation_instances += 1
+        if metadata_mat['labelTrain'][i][0] == 1:
+            train_writer.writerow(record)
+            total_train_instances += 1
+        elif metadata_mat['labelTest'][i][0] == 1:
+            test_writer.writerow(record)
+            total_test_instances += 1
+        elif metadata_mat['labelVal'][i][0] == 1:
+            validation_writer.writerow(record)
+            total_validation_instances += 1
 
-            if i % progress_step == 0 and i != 0:
-                print('{} of {} Completed!'.format(i, total_number_instances))
+        if i % progress_step == 0 and i != 0:
+            print('{} of {} Completed!'.format(i, total_number_instances))
 
 print('='*80)
 print('Summary')
